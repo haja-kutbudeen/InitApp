@@ -1,20 +1,24 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import React from 'react';
+import { StyleSheet, View, Text } from 'react-native';
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
+// If you want to use comp to another file we shoud export that
+// Export comp syntax: export default ...
+// Import comp syntax: Ex: import App  from './App';
+export default class App extends React.Component {
+  // render always expect return statement
+  render(){ 
+    return (
+      <View style = { styles.container }>
+        <Text> Hello World! </Text>
+      </View>
+    );
+  }
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+  container:{
+      alignItems: 'center',
+      justifyContent: 'center',
+      flex: 1
+  }
+})
