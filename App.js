@@ -29,6 +29,7 @@ export default class App extends React.Component {
       <View style = { styles.container }>
         <Button title="+" onPress={() => { this.incrementCount() }} />
          <Text> {this.state.count} </Text>
+         <ShowNumber updateCount={this.state.count} />
          <Button title="-" onPress={() => { this.decrementCount() }} />
          {/* <Button title="View" onPress={() => alert(number)} />
          <Text> {number} </Text> */}
@@ -44,3 +45,23 @@ const styles = StyleSheet.create({
       flex: 1
   }
 })
+
+
+
+// create new component
+// component should have render
+// it should have return
+
+class ShowNumber extends React.Component {
+  shouldComponentUpdate(nextProp){
+    alert(nextProp.updateCount);
+    return true;
+  }
+  render(){ 
+    return (
+      <View style = { styles.container }>
+        <Text> {this.props.updateCount} </Text>
+      </View>
+    );
+  }
+}
