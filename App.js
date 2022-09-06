@@ -1,23 +1,17 @@
 import React, { Component } from 'react'
-import { Text, View, StyleSheet } from 'react-native'
+import { Button } from 'react-native' // Widgets
 
-const PresentationalComponent = (props) => {
+const App = () => {
+   const handlePress = () => false
    return (
-      <View>
-         <Text style = {styles.myState}>
-            {props.myState}HI
-         </Text>
-      </View>
+      <Button
+         onPress = {handlePress}
+         title = "Red button!"
+         color = "red"
+      />
    )
 }
-export default PresentationalComponent
+export default App
 
-const styles = StyleSheet.create ({
-   myState: {
-      marginTop: 20,
-      textAlign: 'center',
-      color: 'blue',
-      fontWeight: 'bold',
-      fontSize: 20
-   }
-})
+
+// Button: Touchable opacity
