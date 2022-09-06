@@ -1,29 +1,29 @@
 import React from 'react'
-import { TouchableOpacity, StyleSheet, View, Text } from 'react-native'
+import { View, TouchableNativeFeedback, Text, StyleSheet } from 'react-native'
 
-const App = () => {
+const Home = (props) => {
    return (
       <View style = {styles.container}>
-         <TouchableOpacity>
+         <TouchableNativeFeedback>
             <Text style = {styles.text}>
-               Button
+               Submit
             </Text>
-         </TouchableOpacity>
+         </TouchableNativeFeedback>
       </View>
    )
 }
-export default App
+export default Home
 
 const styles = StyleSheet.create ({
    container: {
       alignItems: 'center',
-      flex: 1,
       justifyContent: 'center',
+      flex: 1
    },
    text: {
       borderWidth: 1,
       padding: 25,
-      borderColor: 'black',
-      backgroundColor: 'red',
+      borderColor: 'green',
+      backgroundColor: 'red'
    }
 })
