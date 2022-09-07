@@ -1,25 +1,17 @@
-import React, { Component } from 'react'; 
-import { Text } from 'react-native'; 
+import React, { Component } from 'react';
+import { TextInput, View } from 'react-native'; 
  
 export default class myApp extends Component { 
   render() { 
-    { 
-      function sum() { 
-        var a = 30,b=75; 
-        var c=a+b; 
-        alert(c) 
-      } 
-      function min(){
-        var x = 10;
-        var y = 20;
-        var z = x - y ;
-        alert (z);
-      }
-     sum(); 
-    } 
- 
     return ( 
-      <Text>Sample Javascript Code</Text> 
+      <View>
+        <TextInput placeholder="Default" style={{ borderBottomWidth: 1 }} keyboardType={"default"} /> 
+        <TextInput placeholder="numeric" style={{ borderBottomWidth: 1 }} keyboardType={"numeric"} /> 
+        <TextInput placeholder="email-address" style={{ borderBottomWidth: 1 }} keyboardType={"email-address"} /> 
+        <TextInput placeholder="phone-pad" style={{ borderBottomWidth: 1 }} keyboardType={"phone-pad"} /> 
+        <TextInput placeholder="number-pad" style={{ borderBottomWidth: 1 }} keyboardType={"number-pad"} /> 
+        <TextInput placeholder="decimal-pad" style={{ borderBottomWidth: 1 }} keyboardType={"decimal-pad"} /> 
+      </View> 
     ); 
   } 
 }
