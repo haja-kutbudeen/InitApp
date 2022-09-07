@@ -1,98 +1,38 @@
-import { StatusBar } from "expo-status-bar";
-import React, { useState } from "react";
-import {
-  StyleSheet,
-  Text,
-  View,
-  Image,
-  TextInput,
-  Button,
-  TouchableOpacity,
-} from "react-native";
- 
+import React, { useRef, useEffect } from 'react';
+import { Animated, Text, View } from 'react-native';
 
-// UseState: 
+const FadeInView = (props) => {
+  const fadeAnim = useRef(new Animated.Value(0)).current  // Initial value for opacity: 0
 
-export default function App() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
- 
+  useEffect(() => {
+    Animated.timing(
+      fadeAnim,
+      {
+        toValue: 1,
+        duration: 10000,
+      }
+    ).start();
+  }, [fadeAnim])
+
   return (
-    <View style={styles.container}>
-      <Image style={styles.image} source={require("./assets/logo3.png")} />
- 
-      <StatusBar style="auto" />
-      <View style={styles.inputView}>
-        <TextInput
-          style={styles.TextInput}
-          placeholder="Email."
-          placeholderTextColor="#003f5c"
-          onChangeText={(email) => setEmail(email)}
-        />
-      </View>
- 
-      <View style={styles.inputView}>
-        <TextInput
-          style={styles.TextInput}
-          placeholder="Password."
-          placeholderTextColor="#003f5c"
-          secureTextEntry={true}
-          onChangeText={(password) => setPassword(password)}
-        />
-      </View>
- 
-      <TouchableOpacity>
-        <Text style={styles.forgot_button}>Forgot Password?</Text>
-      </TouchableOpacity>
- 
-      <TouchableOpacity style={styles.loginBtn}>
-        <Text style={styles.loginText}>LOGIN</Text>
-      </TouchableOpacity>
-    </View>
+    <Animated.View                 // Special animatable View
+      style={{
+        ...props.style,
+        opacity: fadeAnim,         // Bind opacity to animated value
+      }}
+    >
+      {props.children}
+    </Animated.View>
   );
 }
- 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-  },
- 
-  image: {
-    marginBottom: 40,
-  },
- 
-  inputView: {
-    backgroundColor: "#FFC0CB",
-    borderRadius: 30,
-    width: "70%",
-    height: 45,
-    marginBottom: 20,
- 
-    alignItems: "center",
-  },
- 
-  TextInput: {
-    height: 50,
-    flex: 1,
-    padding: 10,
-    marginLeft: 20,
-  },
- 
-  forgot_button: {
-    height: 30,
-    marginBottom: 30,
-  },
- 
-  loginBtn: {
-    width: "80%",
-    borderRadius: 25,
-    height: 50,
-    alignItems: "center",
-    justifyContent: "center",
-    marginTop: 40,
-    backgroundColor: "#FF1493",
-  },
-});
+
+// You can then use your `FadeInView` in place of a `View` in your components:
+export default () => {
+  return (
+    <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+      <FadeInView style={{width: 250, height: 50, backgroundColor: 'powderblue'}}>
+        <Text style={{fontSize: 28, textAlign: 'center', margin: 10}}>Fading in</Text>
+      </FadeInView>
+    </View>
+  )
+}
