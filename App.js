@@ -1,20 +1,9 @@
 import React, { Component } from 'react';
-import { View } from 'react-native';
-import { WebView } from 'react-native-webview';
+import { StatusBar } from 'react-native'
 
-export default class App extends Component {
-  render() {
-    const runFirst = 'window.isNativeApp = true';
-    return (
-      <View style={{ flex: 1 }}>
-        <WebView
-          source={{
-            uri:
-              'https://web.whatsapp.com',
-          }}
-          injectedJavaScript={runFirst}
-        />
-      </View>
-    );
-  }
+const App = () => {
+   return (
+      <StatusBar barStyle = "dark-content" hidden = {false} backgroundColor = "#00BCD4" translucent = {true}/>
+   )
 }
+export default App
