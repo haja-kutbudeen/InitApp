@@ -1,63 +1,41 @@
 import React, { Component } from 'react';
-import { StyleSheet, Platform, TouchableOpacity, Image, View, Text, Alert
-} from 'react-native';
-export default class Myapp extends Component<{}>
-{
-constructor(){ super(); this.state={ isVisible : true,
-}
-}
-Hide_Splash_Screen=()=>{ this.setState({
-isVisible : false
+import {View, Image, Text } from 'react-native';
+export default class App extends Component { constructor() {
+super(); this.state = {
+animating: false, align: 'center', alignsecond: false,
+};
+setTimeout( () =>
+this.setState({ align: 'flex-start' }, function() { this.setState({
+alignsecond: true,
 });
+}), 3000
+);
 }
-componentDidMount(){ var that = this;
-setTimeout(function(){ that.Hide_Splash_Screen();
-}, 5000);
-}
-render()
-{
-let Splash_Screen = (
-<View style={styles.SplashScreen_RootView}>
-<View style={styles.SplashScreen_ChildView}>
-{/* <Image source={{uri:'https://static.javatpoint.com/tutorial/react- native/images/react-native-tutorial.png'}}
-style={{width:'100%', height: '100%', resizeMode:
-'contain'}} /> */}
+render() { return (
+<View
+style={{ flex: 1,
+alignItems: 'center', flexDirection: 'row', justifyContent: this.state.align, marginHorizontal: 40,
+}}>
+{/* <Image
+source={{ uri:
+'https://raw.githubusercontent.com/AboutReact/sampleresource/master/react_l ogo.png',
+}}
+style={{ width: 100, height: 100 }}
+/> */}
 <Image
-        style={styles.stretch}
         source={require('./image/iphone.jpeg')}
+        style={{ width: 100, height: 100 }}
       />
+{!this.state.alignsecond ? null : (
+<View style={{ margin: 10 }}>
+<Text
+style={{ color: '#092c96', fontSize: 25, fontWeight: 'bold'
+}}>
+Welcome to React Native Mobile Application
+</Text>
 </View>
-</View> )
-return(
-<View style = { styles.MainContainer }>
-<Text style={{textAlign: 'center',width: '100%'
-,backgroundColor: '#fc8bef'}}> Example of Simple Splash Screen</Text>
-{
-(this.state.isVisible === true) ? Splash_Screen : null
-}
+)}
 </View>
 );
 }
 }
-const styles = StyleSheet.create(
-{
-MainContainer:
-{
-flex: 1,
-justifyContent: 'center',
-alignItems: 'center',
-paddingTop: ( Platform.OS === 'ios' ) ? 20 : 0
-},
-SplashScreen_RootView:
-{
-justifyContent: 'center',
-flex:1,
-margin: 10,
-position: 'absolute', width: '100%',
-height: '100%',
-},
-SplashScreen_ChildView:
-{
-justifyContent: 'center', alignItems: 'center', backgroundColor: '#fcf52b', flex:1,
-},
-});
