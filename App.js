@@ -8,6 +8,9 @@ export default class App extends Component {
             result: '',
             values: ''
         }
+        this.operators = ['+', '-', '*', '/'];
+        this.operations = ['DEL', '/', '*', '-', '+', 'C'];
+        this.numbers = ['7', '8', '9', '4', '5', '6', '1', '2', '3', '0', '.', '=']
     }
     input(e) {
         if(e == '.') { 
@@ -21,8 +24,8 @@ export default class App extends Component {
     }
     operate(e) { 
         let x = '';
-        let ops = ['+', '-', '*', '/']
-        let flag = ops.some( e => this.state.values.includes(e));
+        let opt = this.operators;
+        let flag = opt.some( e => this.state.values.includes(e));
         switch (e) { 
             case '+':
                 (flag) ? e = '' : e = e ;
@@ -70,12 +73,11 @@ export default class App extends Component {
     equal() {
         let arr = '';
         let x = '';
-        let ops = ['+', '-', '*', '/']
-        for(let i=0; i<ops.length; i++){
-            arr = this.state.values.split(ops[i])
-            if(this.state.values.split(ops[i]).length == 2){
-                x = eval( arr[0]  + ops[i] +  arr[1] );
-                console.log(x);
+        let opt = this.operators;
+        for(let i=0; i<opt.length; i++){
+            arr = this.state.values.split(opt[i])
+            if(this.state.values.split(opt[i]).length == 2){
+                x = eval( arr[0]  + opt[i] +  arr[1] );
             }
         }
         this.setState({ 
@@ -83,6 +85,34 @@ export default class App extends Component {
         });
     }
     render() {
+        // Numbers section in loop 
+        let nums = this.numbers;
+        let calcNums = [];
+        for(let i = 0; i < nums.length; i++){
+            if(nums[i] != '='){
+                calcNums.push(
+                    <TouchableOpacity  style = { styles.numberButton } onPress = { () => this.input( nums[[i]] ) } >
+                        <Text  style = { styles.numberButtonText }> { nums[i] } </Text>
+                    </TouchableOpacity>
+                )
+            } else {
+                calcNums.push(
+                    <TouchableOpacity  style = { styles.numberButton } onPress = { () => this.equal( nums[[i]] ) } >
+                        <Text  style = { styles.operatorButtonText }> { nums[i] } </Text>
+                    </TouchableOpacity>
+                )
+            }
+        }
+        // Operators section in loop 
+        let ops = this.operations;
+        let calcOps = [];
+        for(let i = 0; i < ops.length; i++){
+            calcOps.push(
+            <TouchableOpacity key = {i} style = { styles.operatorButton } onPress = { () => this.operate( ops[[i]] ) } >
+                <Text  style = { styles.operatorButtonText }> { ops[i] } </Text>
+            </TouchableOpacity>
+            )
+        }
         return (
             <View style = { styles.container }>
                 <View style = { styles.column }>
@@ -95,70 +125,10 @@ export default class App extends Component {
                 </View>
                 <View style = { styles.row }>
                     <View style = { styles.columnNumber }>
-                        <View style = { styles.columnNumberSection }>
-                            <TouchableOpacity  style = { styles.numberButton } onPress = { () => this.input('1') } >
-                                <Text  style = { styles.numberButtonText }> 1 </Text>
-                            </TouchableOpacity>
-                            <TouchableOpacity  style = { styles.numberButton } onPress = { () => this.input('2') } >
-                                <Text  style = { styles.numberButtonText }> 2 </Text>
-                            </TouchableOpacity>
-                            <TouchableOpacity  style = { styles.numberButton } onPress = { () => this.input('3') } >
-                                <Text  style = { styles.numberButtonText }> 3 </Text>
-                            </TouchableOpacity>
-                        </View>
-                        <View style = { styles.columnNumberSection }>
-                            <TouchableOpacity  style = { styles.numberButton } onPress = { () => this.input('4') } >
-                                <Text  style = { styles.numberButtonText }> 4 </Text>
-                            </TouchableOpacity>
-                            <TouchableOpacity  style = { styles.numberButton } onPress = { () => this.input('5') } >
-                                <Text  style = { styles.numberButtonText }> 5 </Text>
-                            </TouchableOpacity>
-                            <TouchableOpacity  style = { styles.numberButton } onPress = { () => this.input('6') } >
-                                <Text  style = { styles.numberButtonText }> 6 </Text>
-                            </TouchableOpacity>
-                        </View>
-                        <View style = { styles.columnNumberSection }>
-                            <TouchableOpacity  style = { styles.numberButton } onPress = { () => this.input('7') } >
-                                <Text  style = { styles.numberButtonText }> 7 </Text>
-                            </TouchableOpacity>
-                            <TouchableOpacity  style = { styles.numberButton } onPress = { () => this.input('8') } >
-                                <Text  style = { styles.numberButtonText }> 8 </Text>
-                            </TouchableOpacity>
-                            <TouchableOpacity  style = { styles.numberButton } onPress = { () => this.input('9') } >
-                                <Text  style = { styles.numberButtonText }> 9 </Text>
-                            </TouchableOpacity>
-                        </View>
-                        <View style = { styles.columnNumberSection }>
-                            <TouchableOpacity  style = { styles.numberButton } onPress = { () => this.input('.') } >
-                                <Text  style = { styles.numberButtonText }> . </Text>
-                            </TouchableOpacity>
-                            <TouchableOpacity  style = { styles.numberButton } onPress = { () => this.input('0') } >
-                                <Text  style = { styles.numberButtonText }> 0 </Text>
-                            </TouchableOpacity>
-                            <TouchableOpacity  style = { styles.numberButton } onPress = { () => this.equal('=') } >
-                                <Text  style = { styles.numberButtonText }> = </Text>
-                            </TouchableOpacity>
-                        </View>
+                        { calcNums }
                     </View>
                     <View style = { styles.columnOprator }>
-                        <TouchableOpacity  style = { styles.operatorButton } onPress = { () => this.operate('DEL') } >
-                            <Text  style = { styles.operatorButtonText }> DEL </Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity  style = { styles.operatorButton } onPress = { () => this.operate('/') } >
-                            <Text  style = { styles.operatorButtonText }> / </Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity  style = { styles.operatorButton } onPress = { () => this.operate('*') } >
-                            <Text  style = { styles.operatorButtonText }> * </Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity  style = { styles.operatorButton } onPress = { () => this.operate('-') } >
-                            <Text  style = { styles.operatorButtonText }> - </Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity  style = { styles.operatorButton } onPress = { () => this.operate('+') } >
-                            <Text  style = { styles.operatorButtonText }> + </Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity  style = { styles.operatorButton } onPress = { () => this.operate('C') } >
-                            <Text  style = { styles.operatorButtonText }> C </Text>
-                        </TouchableOpacity>
+                        { calcOps }
                     </View>
                 </View>
             </View>
@@ -172,69 +142,86 @@ const styles = StyleSheet.create({
     },
     row: { 
         flex: 1,
-        flexDirection: 'row',
+        flexDirection: 'row'
     },
     column: { 
         flex: 1,
         flexDirection: 'column',
-        justifyContent: 'space-around',
+        justifyContent:'flex-start',
+        alignContent: 'center'
     },
     rowInput: { 
         flex: 1,
         flexDirection: 'row',
-        backgroundColor: 'pink',
-        justifyContent: 'flex-end'
+        backgroundColor: '#243541',
+        justifyContent: 'flex-end',
+        padding: 5
     },
     rowResult: { 
-        flex: .30,
+        flex: .5,
         flexDirection: 'row',
-        backgroundColor: 'cyan',
-        justifyContent: 'flex-end'
+        backgroundColor: '#243541fa',
+        justifyContent: 'flex-end',
+        paddingTop: 5,
+        paddingRight: 5,
+        paddingLeft: 5,
+        paddingBottom: 10
     },
-   columnNumber: {
+    rowInputText: {
+        fontSize: 60,
+        alignSelf: 'flex-end',
+        color: 'white'
+    },
+    rowResultText: {
+        fontSize: 40,
+        alignSelf: 'flex-end',
+        color: 'white'
+    },
+    columnNumber: {
         flex: 3,
-        flexDirection: 'column',
-        backgroundColor: 'black'
-   },
-   columnNumberSection: {
-        flexDirection: 'row'
-   },
-   columnOprator: {
+        flexDirection: 'row',
+        backgroundColor: 'black',
+        flexWrap: 'wrap',
+        margin:0
+    },
+    columnOprator: {
         flex: 1,
         flexDirection: 'column',
-        backgroundColor: 'black'
-   },
-   rowInputText: {
-        fontSize: 70,
-        alignSelf: 'flex-end',
-   },
-   rowResultText: {
-        fontSize: 50,
-        alignSelf: 'flex-end',
-   },
+        backgroundColor: 'black',
+        flexWrap: 'wrap',
+        margin:0
+    },
    numberButton: {
         padding: 33,
-        backgroundColor: 'red',
-        width: '32.7%',
-        height: '100%',
-        margin: 1
-   },
-   numberButtonText: {
-        fontSize: 40,
-        color: 'white',
-        alignSelf: 'center'
+        backgroundColor: '#243541',
+        width: '32.5%',
+        height: '25%',
+        margin: .5,
+        shadowColor: '#243541',
+        shadowRadius: 10,
+        shadowOpacity: 1,
    },
    operatorButton: {
-        padding: 10,
-        backgroundColor: 'blue',
-        width: '100%',
-        height: '16.25%',
-        margin: 1,
-        justifyContent: 'center'
+        backgroundColor: '#243541',
+        width: '105%',
+        height: '16.45%',
+        marginTop: .5,
+        marginBottom: .5,
+        marginRight: .5,
+        marginLeft: -4,
+        justifyContent: 'center',
+        shadowColor: '#243541',
+        shadowRadius: 10,
+        shadowOpacity: 1,
+    },
+    numberButtonText: {
+         fontSize: 40,
+         color: 'white',
+         alignSelf: 'center'
     },
     operatorButtonText: {
         fontSize: 30,
-        color: 'white',
+        color: '#ED802E',
         alignSelf: 'center'
     }
 });
