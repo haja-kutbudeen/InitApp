@@ -91,13 +91,13 @@ export default class App extends Component {
         for(let i = 0; i < nums.length; i++){
             if(nums[i] != '='){
                 calcNums.push(
-                    <TouchableOpacity  style = { styles.numberButton } onPress = { () => this.input( nums[[i]] ) } >
+                    <TouchableOpacity key = {i} style = { styles.numberButton } onPress = { () => this.input( nums[[i]] ) } >
                         <Text  style = { styles.numberButtonText }> { nums[i] } </Text>
                     </TouchableOpacity>
                 )
             } else {
                 calcNums.push(
-                    <TouchableOpacity  style = { styles.numberButton } onPress = { () => this.equal( nums[[i]] ) } >
+                    <TouchableOpacity key = {i} style = { styles.numberButton } onPress = { () => this.equal( nums[[i]] ) } >
                         <Text  style = { styles.operatorButtonText }> { nums[i] } </Text>
                     </TouchableOpacity>
                 )
@@ -204,7 +204,7 @@ const styles = StyleSheet.create({
    operatorButton: {
         backgroundColor: '#243541',
         width: '105%',
-        height: '16.45%',
+        height: '16.4%',
         marginTop: .5,
         marginBottom: .5,
         marginRight: .5,
@@ -216,7 +216,7 @@ const styles = StyleSheet.create({
     },
     numberButtonText: {
          fontSize: 40,
-         color: 'white',
+         color: '#ffffff',
          alignSelf: 'center'
     },
     operatorButtonText: {
