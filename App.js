@@ -1,11 +1,26 @@
 import React from "react";
-import {View, StyleSheet, Button, Text, SafeAreaView} from 'react-native';
+import { View, StyleSheet, Button, Text, SafeAreaView } from 'react-native';
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import SplashScreen from './components/SplashScreen';
 import LoginScreen from './components/LoginScreen';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { Dashboard, Profile, Settings } from './components/Tabs'
 
 const Stack = createNativeStackNavigator();
+const Tab = createBottomTabNavigator();
+
+const HomeTabsComp = () => {
+  return <Tab.Navigator>
+    <Tab.Screen options={{ tabBarIcon: () => <Text>D</Text> }} name='dashboard' component={Dashboard} />
+    <Tab.Screen options={{ tabBarIcon: () => <Text style={{ backgroundColor: 'blue', padding: 10, borderRadius: 25, color: 'white', overflow: 'hidden' }}>P</Text> }} name='profile' component={Profile} />
+    <Tab.Screen options={{ tabBarIcon: ({
+      focused,
+      color,
+      size
+    }) => <Text style={{ color: focused? 'red' : 'white' }}>S</Text> }} name='settings' component={Settings} />
+  </Tab.Navigator>
+}
 
 const App = () => {
   return (
@@ -27,6 +42,9 @@ const App = () => {
                 // headerTitle: () => <Text> Splash Screen</Text>
                 }} />
               <Stack.Screen name='loginScreen' component={LoginScreen} />
+              <Stack.Screen name='homeTabs' component={HomeTabsComp} options = {{
+                header: () => null
+              }} />
             </Stack.Navigator>
           </NavigationContainer>
       </View>

@@ -9,14 +9,13 @@ const LoginScreen = ( {navigation} ) => {
         })
     }, [])
 
-    const onPressButton = () => {
-        navigation.push('splashScreen');
-        // navigation.replace('splashScreen');
+    const gotoHomePage = () => {
+        navigation.push('homeTabs');
     }
     
     return (
         <View>
-            <Button title='Splash' onPress={onPressButton}  />
+            <Button title='Splash' onPress={gotoHomePage}  />
         </View>
     )
 };
