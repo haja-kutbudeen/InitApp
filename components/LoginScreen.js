@@ -9,13 +9,18 @@ const LoginScreen = ( {navigation} ) => {
         })
     }, [])
 
-    const gotoHomePage = () => {
+    const gotoHomeTabPage = () => {
         navigation.push('homeTabs');
+    }
+
+    const gotoHomeDrawerPage = () => {
+        navigation.push('homeDrawer');
     }
     
     return (
         <View>
-            <Button title='Splash' onPress={gotoHomePage}  />
+            <Button title='Tabs' onPress={gotoHomeTabPage}  />
+            <Button title='Drawer' onPress={gotoHomeDrawerPage}  />
         </View>
     )
 };

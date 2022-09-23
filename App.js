@@ -1,14 +1,16 @@
 import React from "react";
-import { View, StyleSheet, Button, Text, SafeAreaView } from 'react-native';
-import { NavigationContainer } from "@react-navigation/native";
+import { View, StyleSheet, TouchableOpacity, Button, Text, SafeAreaView } from 'react-native';
+import { NavigationContainer, DrawerActions } from "@react-navigation/native";
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import SplashScreen from './components/SplashScreen';
 import LoginScreen from './components/LoginScreen';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Dashboard, Profile, Settings } from './components/Tabs'
+import { createDrawerNavigator } from "@react-navigation/drawer";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
+const Drawer = createDrawerNavigator();
 
 const HomeTabsComp = () => {
   return <Tab.Navigator>
@@ -20,6 +22,21 @@ const HomeTabsComp = () => {
       size
     }) => <Text style={{ color: focused? 'red' : 'white' }}>S</Text> }} name='settings' component={Settings} />
   </Tab.Navigator>
+}
+
+const HomeDrawerComp = (props) => {
+  return <Drawer.Navigator screenOptions={{
+    header: () => <View style={{ height: 45, flexDirection: 'row' }}>
+      <TouchableOpacity onPress={() => props.navigation.dispatch(DrawerActions.openDrawer())} >
+        <Text> ☰ </Text>
+      </TouchableOpacity>
+      <Text style={{ flex:1, textAlign: 'center', alignSelf: 'center' }}>{props.route.name}</Text>
+    </View>
+  }}>
+    <Drawer.Screen name='dashboard' component={Dashboard} />
+    <Drawer.Screen name='profile' component={Profile} />
+    <Drawer.Screen name='settings' component={Settings} />
+  </Drawer.Navigator>
 }
 
 const App = () => {
@@ -43,6 +60,9 @@ const App = () => {
                 }} />
               <Stack.Screen name='loginScreen' component={LoginScreen} />
               <Stack.Screen name='homeTabs' component={HomeTabsComp} options = {{
+                header: () => null
+              }} />
+              <Stack.Screen name='homeDrawer' component={HomeDrawerComp} options = {{
                 header: () => null
               }} />
             </Stack.Navigator>
